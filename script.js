@@ -112,6 +112,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Wait for SVG objects to load
+    const halfSubtractorObj = document.getElementById('half-subtractor-img');
+    const fullSubtractorObj = document.getElementById('full-subtractor-img');
+    
+    if (halfSubtractorObj) {
+        halfSubtractorObj.addEventListener('load', function() {
+            console.log('Half subtractor SVG loaded');
+            updateHalfSubtractor();
+        });
+    }
+    
+    if (fullSubtractorObj) {
+        fullSubtractorObj.addEventListener('load', function() {
+            console.log('Full subtractor SVG loaded');
+            updateFullSubtractor();
+        });
+    }
+    
     // Initial update
     updateHalfSubtractor();
     updateFullSubtractor();
@@ -219,12 +237,8 @@ function updateHalfSubtractor() {
         halfBorrow.textContent = borrow;
     }
     
-    // Update wire colors based on signal
-    updateWireState('half-wire-a', inputA);
-    updateWireState('half-wire-b', inputB);
-    updateWireState('half-wire-diff', difference);
-    updateWireState('half-wire-borrow', borrow);
-    updateWireState('half-wire-a-not', inputA);
+    // Update signal indicators on the image
+    updateHalfSubtractorSignals(inputA, inputB, difference, borrow);
     
     // Update toggle switch aria-checked attributes
     const halfToggleA = halfInputA.parentNode;
@@ -232,6 +246,51 @@ function updateHalfSubtractor() {
     
     if (halfToggleA) halfToggleA.setAttribute('aria-checked', halfInputA.checked);
     if (halfToggleB) halfToggleB.setAttribute('aria-checked', halfInputB.checked);
+    
+    // Update SVG elements if possible
+    updateHalfSubtractorSVG(inputA, inputB, difference, borrow);
+}
+
+// Function to update signal indicators on half subtractor image
+function updateHalfSubtractorSignals(inputA, inputB, difference, borrow) {
+    const overlay = document.getElementById('half-subtractor-overlay');
+    if (!overlay) return;
+    
+    // Clear previous indicators
+    overlay.innerHTML = '';
+    
+    // Define signal positions (percentages of the image) for our custom SVG
+    const signalPositions = {
+        inputA: { x: 14, y: 27 },
+        inputB: { x: 14, y: 67 },
+        xorGate: { x: 42, y: 27 },
+        andGate: { x: 42, y: 67 },
+        difference: { x: 76, y: 27 },
+        borrow: { x: 76, y: 67 }
+    };
+    
+    // Add signal indicators
+    addSignalIndicator(overlay, signalPositions.inputA, inputA === 1);
+    addSignalIndicator(overlay, signalPositions.inputB, inputB === 1);
+    addSignalIndicator(overlay, signalPositions.xorGate, difference === 1);
+    addSignalIndicator(overlay, signalPositions.andGate, borrow === 1);
+    addSignalIndicator(overlay, signalPositions.difference, difference === 1);
+    addSignalIndicator(overlay, signalPositions.borrow, borrow === 1);
+}
+
+// Function to update the SVG elements directly if possible
+function updateHalfSubtractorSVG(inputA, inputB, difference, borrow) {
+    const svgObject = document.getElementById('half-subtractor-img');
+    if (!svgObject || !svgObject.contentDocument) return;
+    
+    try {
+        const svgDoc = svgObject.contentDocument;
+        
+        // Update wires and gates based on signal values
+        // This is optional and depends on the structure of your SVG
+    } catch (e) {
+        console.error('Error updating half subtractor SVG:', e);
+    }
 }
 
 // Full Subtractor Functions
@@ -364,19 +423,8 @@ function updateFullSubtractor() {
         fullBorrow.textContent = borrow;
     }
     
-    // Update wire colors based on signal
-    updateWireState('full-wire-a', inputA);
-    updateWireState('full-wire-b', inputB);
-    updateWireState('full-wire-bin', inputBin);
-    updateWireState('full-wire-xor1', xor1);
-    updateWireState('full-wire-xor1-to-and1', xor1);
-    updateWireState('full-wire-and1', and1);
-    updateWireState('full-wire-bin-to-xor2', inputBin);
-    updateWireState('full-wire-bin-to-and2', inputBin);
-    updateWireState('full-wire-and2-to-or', and2);
-    updateWireState('full-wire-and1-to-or', and1);
-    updateWireState('full-wire-diff', difference);
-    updateWireState('full-wire-borrow', borrow);
+    // Update signal indicators on the image
+    updateFullSubtractorSignals(inputA, inputB, inputBin, difference, borrow);
     
     // Update toggle switch aria-checked attributes
     const fullToggleA = fullInputA.parentNode;
@@ -386,20 +434,74 @@ function updateFullSubtractor() {
     if (fullToggleA) fullToggleA.setAttribute('aria-checked', fullInputA.checked);
     if (fullToggleB) fullToggleB.setAttribute('aria-checked', fullInputB.checked);
     if (fullToggleBin) fullToggleBin.setAttribute('aria-checked', fullInputBin.checked);
+    
+    // Update SVG elements if possible
+    updateFullSubtractorSVG(inputA, inputB, inputBin, difference, borrow);
 }
 
-// Helper function to update wire state (active/inactive)
-function updateWireState(wireId, isActive) {
-    const wire = document.getElementById(wireId);
-    if (wire) {
-        if (isActive) {
-            wire.classList.add('active-wire');
-        } else {
-            wire.classList.remove('active-wire');
-        }
-    } else {
-        console.warn('Wire element not found:', wireId);
+// Function to update signal indicators on full subtractor image
+function updateFullSubtractorSignals(inputA, inputB, inputBin, difference, borrow) {
+    const overlay = document.getElementById('full-subtractor-overlay');
+    if (!overlay) return;
+    
+    // Clear previous indicators
+    overlay.innerHTML = '';
+    
+    // Define signal positions (percentages of the image) for our custom SVG
+    const signalPositions = {
+        inputA: { x: 12, y: 25 },
+        inputB: { x: 12, y: 50 },
+        inputBin: { x: 12, y: 75 },
+        xorGate1: { x: 30, y: 25 },
+        xorGate2: { x: 52, y: 25 },
+        andGate1: { x: 30, y: 50 },
+        andGate2: { x: 52, y: 50 },
+        orGate: { x: 72, y: 50 },
+        difference: { x: 80, y: 25 },
+        borrow: { x: 80, y: 50 }
+    };
+    
+    // Add signal indicators
+    addSignalIndicator(overlay, signalPositions.inputA, inputA === 1);
+    addSignalIndicator(overlay, signalPositions.inputB, inputB === 1);
+    addSignalIndicator(overlay, signalPositions.inputBin, inputBin === 1);
+    addSignalIndicator(overlay, signalPositions.xorGate1, (inputA ^ inputB) === 1);
+    addSignalIndicator(overlay, signalPositions.xorGate2, difference === 1);
+    addSignalIndicator(overlay, signalPositions.andGate1, ((!inputA) & inputB) === 1);
+    addSignalIndicator(overlay, signalPositions.andGate2, ((!(inputA ^ inputB)) & inputBin) === 1);
+    addSignalIndicator(overlay, signalPositions.orGate, borrow === 1);
+    addSignalIndicator(overlay, signalPositions.difference, difference === 1);
+    addSignalIndicator(overlay, signalPositions.borrow, borrow === 1);
+}
+
+// Function to update the SVG elements directly if possible
+function updateFullSubtractorSVG(inputA, inputB, inputBin, difference, borrow) {
+    const svgObject = document.getElementById('full-subtractor-img');
+    if (!svgObject || !svgObject.contentDocument) return;
+    
+    try {
+        const svgDoc = svgObject.contentDocument;
+        
+        // Update wires and gates based on signal values
+        // This is optional and depends on the structure of your SVG
+    } catch (e) {
+        console.error('Error updating full subtractor SVG:', e);
     }
+}
+
+// Helper function to add a signal indicator to the overlay
+function addSignalIndicator(overlay, position, isActive) {
+    const indicator = document.createElement('div');
+    indicator.className = 'signal-indicator';
+    if (isActive) {
+        indicator.classList.add('active');
+    }
+    
+    indicator.style.left = position.x + '%';
+    indicator.style.top = position.y + '%';
+    indicator.style.opacity = isActive ? '1' : '0.2';
+    
+    overlay.appendChild(indicator);
 }
 
 // Helper function to animate output changes
