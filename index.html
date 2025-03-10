@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Electronics - Subtractors</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Digital Electronics Project</h1>
+        <p>Interactive Subtractor Circuits</p>
+        <div class="creator-info">
+            <p>Made by: Hardik Thapar | 2410992744</p>
+        </div>
+    </header>
+
+    <main>
+        <section id="half-subtractor">
+            <h2>Half Subtractor</h2>
+            <div class="circuit-container">
+                <div class="circuit-diagram">
+                    <div class="inputs">
+                        <div class="input-group">
+                            <label for="half-input-a">Input A</label>
+                            <div class="toggle-switch" tabindex="0" role="switch" aria-checked="false">
+                                <input type="checkbox" id="half-input-a" class="input-checkbox">
+                                <span class="slider"></span>
+                            </div>
+                            <span class="input-value" id="half-a-value">0</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="half-input-b">Input B</label>
+                            <div class="toggle-switch" tabindex="0" role="switch" aria-checked="false">
+                                <input type="checkbox" id="half-input-b" class="input-checkbox">
+                                <span class="slider"></span>
+                            </div>
+                            <span class="input-value" id="half-b-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="circuit-visual">
+                        <svg id="half-subtractor-svg" width="400" height="250" viewBox="0 0 400 250">
+                            <!-- SVG elements will be added via JavaScript -->
+                        </svg>
+                    </div>
+                    
+                    <div class="outputs">
+                        <div class="output-group">
+                            <label>Difference (D)</label>
+                            <div class="output-indicator" id="half-diff">0</div>
+                        </div>
+                        <div class="output-group">
+                            <label>Borrow (B<sub>out</sub>)</label>
+                            <div class="output-indicator" id="half-borrow">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="truth-table">
+                    <h3>Truth Table</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>Difference</th>
+                                <th>Borrow</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="full-subtractor">
+            <h2>Full Subtractor</h2>
+            <div class="circuit-container">
+                <div class="circuit-diagram">
+                    <div class="inputs">
+                        <div class="input-group">
+                            <label for="full-input-a">Input A</label>
+                            <div class="toggle-switch" tabindex="0" role="switch" aria-checked="false">
+                                <input type="checkbox" id="full-input-a" class="input-checkbox">
+                                <span class="slider"></span>
+                            </div>
+                            <span class="input-value" id="full-a-value">0</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="full-input-b">Input B</label>
+                            <div class="toggle-switch" tabindex="0" role="switch" aria-checked="false">
+                                <input type="checkbox" id="full-input-b" class="input-checkbox">
+                                <span class="slider"></span>
+                            </div>
+                            <span class="input-value" id="full-b-value">0</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="full-input-bin">B<sub>in</sub></label>
+                            <div class="toggle-switch" tabindex="0" role="switch" aria-checked="false">
+                                <input type="checkbox" id="full-input-bin" class="input-checkbox">
+                                <span class="slider"></span>
+                            </div>
+                            <span class="input-value" id="full-bin-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="circuit-visual">
+                        <svg id="full-subtractor-svg" width="400" height="300" viewBox="0 0 400 300">
+                            <!-- SVG elements will be added via JavaScript -->
+                        </svg>
+                    </div>
+                    
+                    <div class="outputs">
+                        <div class="output-group">
+                            <label>Difference (D)</label>
+                            <div class="output-indicator" id="full-diff">0</div>
+                        </div>
+                        <div class="output-group">
+                            <label>Borrow (B<sub>out</sub>)</label>
+                            <div class="output-indicator" id="full-borrow">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="truth-table">
+                    <h3>Truth Table</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>B<sub>in</sub></th>
+                                <th>Difference</th>
+                                <th>B<sub>out</sub></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Digital Electronics Project - Subtractor Circuits</p>
+        <p>Made by: Hardik Thapar | 2410992744</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
